@@ -6,7 +6,7 @@
 /*   By: hbel-hou <hbel-hou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 09:19:03 by obeaj             #+#    #+#             */
-/*   Updated: 2022/12/09 20:00:25 by hbel-hou         ###   ########.fr       */
+/*   Updated: 2022/12/11 12:06:08 by hbel-hou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,8 +131,16 @@ int	getsocket(std::vector<createSocket> sockets, int fd)
 
 int	checkExtansion(String filename)
 {
-	if (filename.compare(filename.size() - 4, filename.size(), "conf"))
-		return -1;
+	try
+	{
+		if (filename.compare(filename.size() - 4, filename.size(), "conf"))
+			return -1;
+	}
+	catch(const std::exception& e)
+	{
+		throw std::runtime_error("Bad extansion !!!");
+	}
+
 	return 0;
 }
 
@@ -287,7 +295,7 @@ String	getContentType(String path, CODES status)
 	String type = checkExtension(path);
 
 	if (type == "html" || type == "htm" || status == NOT_FOUND)
-			return "text/html";
+		return "text/html";
 	else if (type == "mp4")
 		return "video/mp4";
 	else if (type == "aac")
